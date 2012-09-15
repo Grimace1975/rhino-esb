@@ -7,6 +7,7 @@ using Starbucks.Barista;
 using Starbucks.Cashier;
 using Starbucks.Customer;
 using Starbucks.Messages;
+using Starbucks.Mailer;
 
 namespace Starbucks
 {
@@ -14,6 +15,10 @@ namespace Starbucks
     {
         public static void Main()
         {
+            var mailer = new RemoteAppDomainHost(typeof(MailerBootStrapper))
+                .Configuration("Mailer.config");
+            mailer.Start();
+
             PrepareQueues.Prepare("msmq://localhost/starbucks.barista.balancer", QueueType.LoadBalancer);
             PrepareQueues.Prepare("msmq://localhost/starbucks.barista.balancer.acceptingwork", QueueType.LoadBalancer);
             PrepareQueues.Prepare("msmq://localhost/starbucks.barista", QueueType.Standard);

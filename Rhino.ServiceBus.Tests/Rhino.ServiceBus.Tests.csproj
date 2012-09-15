@@ -202,6 +202,19 @@
     <Compile Include="Containers\StructureMap\ContainerTests.cs" />
     <Compile Include="Containers\Unity\Can_host_in_another_app_domain.cs" />
     <Compile Include="Containers\Unity\ContainerTests.cs" />
+    <Compile Include="Files\CustomizingMessageConstruction.cs" />
+    <Compile Include="Files\EnablingFilesPerformanceCounters.cs" />
+    <Compile Include="Files\MessageLoggingTests.cs" />
+    <Compile Include="Files\FilesSubscriptionStorageFixture.cs" />
+    <Compile Include="Files\Files_Messages_that_have_no_handlers.cs" />
+    <Compile Include="Files\UsingOneWayBusWithAlternateStorageLocation.cs" />
+    <Compile Include="Files\UsingOneWayBusWithBusNameSpecified.cs" />
+    <Compile Include="Files\UsingFilesBus.cs" />
+    <Compile Include="Files\UsingFilesBusWithAlternateStorageLocation.cs" />
+    <Compile Include="Files\UsingFilesTransport.cs" />
+    <Compile Include="Files\WhenErrorOccurs.cs" />
+    <Compile Include="Files\WhenReceivingTimedMessage.cs" />
+    <Compile Include="Files\WithDebugging.cs" />
     <Compile Include="RhinoQueues\UsingOneWayBusWithBusNameSpecified.cs" />
     <Compile Include="RhinoQueues\CustomizingMessageConstruction.cs" />
     <Compile Include="CanRouteMessageToConsumerThroughContainer.cs" />
@@ -271,6 +284,10 @@
       <Project>{4D65E756-C0C9-42AA-9B73-75E85E77EA7B}</Project>
       <Name>Rhino.ServiceBus.Castle</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rhino.ServiceBus.Files\Rhino.ServiceBus.Files.csproj">
+      <Project>{ED4A80BD-B048-4852-958A-B7FFB2CED320}</Project>
+      <Name>Rhino.ServiceBus.Files</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rhino.ServiceBus.RhinoQueues\Rhino.ServiceBus.RhinoQueues.csproj">
       <Project>{9748B2BF-41EA-487A-944C-A4ABEFFA2087}</Project>
       <Name>Rhino.ServiceBus.RhinoQueues</Name>
@@ -302,6 +319,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="BusOnTransactionalQueue.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Files.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="LoadBalancer.config">

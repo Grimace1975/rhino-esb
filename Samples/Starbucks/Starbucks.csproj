@@ -131,6 +131,7 @@
     <Compile Include="Barista\BaristaState.cs" />
     <Compile Include="Cashier\CashierBootStrapper.cs" />
     <Compile Include="Cashier\CashierSaga.cs" />
+    <Compile Include="Mailer\MailerBootStrapper.cs" />
     <Compile Include="Customer\CustomerBootStrapper.cs" />
     <Compile Include="Customer\CustomerController.cs" />
     <Compile Include="Customer\CustomerUserInterface.cs" />
@@ -150,6 +151,10 @@
       <Project>{4D65E756-C0C9-42AA-9B73-75E85E77EA7B}</Project>
       <Name>Rhino.ServiceBus.Castle</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Rhino.ServiceBus.Files\Rhino.ServiceBus.Files.csproj">
+      <Project>{ED4A80BD-B048-4852-958A-B7FFB2CED320}</Project>
+      <Name>Rhino.ServiceBus.Files</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Rhino.ServiceBus.RhinoQueues\Rhino.ServiceBus.RhinoQueues.csproj">
       <Project>{9748B2BF-41EA-487A-944C-A4ABEFFA2087}</Project>
       <Name>Rhino.ServiceBus.RhinoQueues</Name>
@@ -167,6 +172,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="BaristaLoadBalancer.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Mailer.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="log4net.config">
