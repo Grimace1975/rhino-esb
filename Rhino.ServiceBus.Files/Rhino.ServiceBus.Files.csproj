@@ -42,13 +42,17 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\FileConfigurationAware.cs" />
     <Compile Include="Config\FileOneWayBusConfigurationAware.cs" />
+    <Compile Include="Files\IMessageMapper.cs" />
     <Compile Include="Files\ProtocolManager.cs" />
+    <Compile Include="Files\Protocols\FileInfo.cs" />
+    <Compile Include="Files\Storage\MessageMeta.cs" />
     <Compile Include="Files\Storage\StorageMessage.cs" />
     <Compile Include="Files\Storage\MessageBookmarks.cs" />
     <Compile Include="Files\Storage\MessageStatus.cs" />
@@ -61,7 +65,7 @@
     <Compile Include="Files\Storage\QueueStorage.cs" />
     <Compile Include="Files\Queues\QueueManager+Storage.cs" />
     <Compile Include="Files\Protocols\CsvProtocol.cs" />
-    <Compile Include="Files\IQueueProtocol.cs" />
+    <Compile Include="Files\Protocols\IQueueProtocol.cs" />
     <Compile Include="Files\Queues\MessageEventArgs.cs" />
     <Compile Include="Files\FilesSubscriptionStorage.cs" />
     <Compile Include="Files\Monitoring\ImmediatelyRecordingCountersProvider.cs" />
@@ -78,6 +82,9 @@
     <Compile Include="Files\Queues\Message.cs" />
     <Compile Include="Files\Queues\MessagePayload.cs" />
     <Compile Include="Files\Monitoring\TransactionalPerformanceCountersProvider.cs" />
+    <Compile Include="Files\Utils\MonoHttpEncoder.cs" />
+    <Compile Include="Files\Utils\MonoHttpUtility.cs" />
+    <Compile Include="Files\Utils\Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Files\ErrorAction.cs" />
     <Compile Include="Files\FilesCurrentMessageInformation.cs" />

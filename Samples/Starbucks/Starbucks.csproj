@@ -131,6 +131,8 @@
     <Compile Include="Barista\BaristaState.cs" />
     <Compile Include="Cashier\CashierBootStrapper.cs" />
     <Compile Include="Cashier\CashierSaga.cs" />
+    <Compile Include="Mailer\MailerMapper.cs" />
+    <Compile Include="Mailer\MailerClientBootStrapper.cs" />
     <Compile Include="Mailer\MailerBootStrapper.cs" />
     <Compile Include="Customer\CustomerBootStrapper.cs" />
     <Compile Include="Customer\CustomerController.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Messages\Cashier\PaymentDue.cs" />
     <Compile Include="Messages\Cashier\PrepareDrink.cs" />
     <Compile Include="Messages\Cashier\SubmitPayment.cs" />
+    <Compile Include="Messages\Mailer\WelcomeNotice.cs" />
     <Compile Include="PrepareQueues.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -172,6 +175,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="BaristaLoadBalancer.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="App.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Mailer.config">

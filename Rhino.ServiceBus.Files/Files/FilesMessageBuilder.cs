@@ -5,17 +5,20 @@ using Rhino.ServiceBus.Files.Queues;
 using Rhino.ServiceBus.Internal;
 using Rhino.ServiceBus.Messages;
 using Rhino.ServiceBus.Transport;
+using Rhino.ServiceBus.Files.Protocols;
 
 namespace Rhino.ServiceBus.Files
 {
     public class FilesMessageBuilder : IMessageBuilder<MessagePayload>
     {
+        private readonly IQueueProtocol queueProtocol;
         private readonly IMessageSerializer messageSerializer;
         private readonly ICustomizeOutgoingMessages[] customizeHeaders;
         private Endpoint endpoint;
 
-        public FilesMessageBuilder(IMessageSerializer messageSerializer, IServiceLocator serviceLocator)
+        public FilesMessageBuilder(IQueueProtocol queueProtocol, IMessageSerializer messageSerializer, IServiceLocator serviceLocator)
         {
+            this.queueProtocol = queueProtocol;
             this.messageSerializer = messageSerializer;
             customizeHeaders = serviceLocator.ResolveAll<ICustomizeOutgoingMessages>().ToArray();
         }
@@ -28,16 +31,9 @@ namespace Rhino.ServiceBus.Files
                 throw new InvalidOperationException("A source endpoint is required for Rhino Queues transport, did you Initialize me? try providing a null Uri.");
 
             var messageId = Guid.NewGuid();
-            var data = new byte[0];
-            using (var memoryStream = new MemoryStream())
-            {
-                messageSerializer.Serialize(messageInformation.Messages, memoryStream);
-                data = memoryStream.ToArray();
-
-            }
             var payload = new MessagePayload
             {
-                Data = data,
+                Data = queueProtocol.GetPayloadData(messageSerializer, messageInformation.Messages),
                 Headers =
                         {
                             {"id", messageId.ToString()},

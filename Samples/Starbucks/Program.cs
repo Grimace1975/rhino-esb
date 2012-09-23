@@ -19,6 +19,19 @@ namespace Starbucks
                 .Configuration("Mailer.config");
             mailer.Start();
 
+            var mailerClient = new DefaultHost();
+
+            mailerClient.BusConfiguration(c => c.Bus("file.eml://./starbucks.mailer.host")
+                .AddAssembly(typeof(Rhino.ServiceBus.Files.FilesTransport).Assembly)
+                .Receive("Starbucks.Messages.Mailer", "file.eml://./starbucks.mailer"));
+            mailerClient.Start<MailerClientBootStrapper>();
+
+            var mailerClientBus = (IServiceBus)mailerClient.Bus;
+            mailerClientBus.Send(new Messages.Mailer.WelcomeNotice
+            {
+                CustomerName = "Customer"
+            });
+
             PrepareQueues.Prepare("msmq://localhost/starbucks.barista.balancer", QueueType.LoadBalancer);
             PrepareQueues.Prepare("msmq://localhost/starbucks.barista.balancer.acceptingwork", QueueType.LoadBalancer);
             PrepareQueues.Prepare("msmq://localhost/starbucks.barista", QueueType.Standard);
@@ -27,7 +40,7 @@ namespace Starbucks
 
             var baristaLoadBalancer = new RemoteAppDomainHost(typeof(CastleBootStrapper).Assembly, "BaristaLoadBalancer.config");
             baristaLoadBalancer.Start();
-            
+
             Console.WriteLine("Barista load balancer has started");
 
             var cashier = new RemoteAppDomainHost(typeof(CashierBootStrapper))

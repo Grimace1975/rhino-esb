@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Common.Logging;
+using Rhino.ServiceBus.Files.Protocols;
 
 namespace Rhino.ServiceBus.Files.Storage
 {
@@ -10,7 +11,6 @@ namespace Rhino.ServiceBus.Files.Storage
         void Initialize();
         void Global(Action<GlobalActions> action);
         void Send(Action<SenderActions> action);
-
         void DisposeRudely();
     }
 
@@ -18,10 +18,12 @@ namespace Rhino.ServiceBus.Files.Storage
     {
         private readonly ILog log = LogManager.GetLogger(typeof(QueueStorage));
         private readonly ReaderWriterLockSlim usageLock = new ReaderWriterLockSlim();
+        private readonly IQueueProtocol protocol;
         private readonly string path;
 
-        public QueueStorage(string path)
+        public QueueStorage(IQueueProtocol protocol, string path)
         {
+            this.protocol = protocol;
             this.path = path;
             Id = Guid.NewGuid();
         }
@@ -39,7 +41,7 @@ namespace Rhino.ServiceBus.Files.Storage
             {
                 if (shouldTakeLock)
                     usageLock.EnterReadLock();
-                using (var qa = new GlobalActions())
+                using (var qa = new GlobalActions(protocol, path, Id))
                     action(qa);
             }
             finally { if (shouldTakeLock) usageLock.ExitReadLock(); }
@@ -52,11 +54,13 @@ namespace Rhino.ServiceBus.Files.Storage
             {
                 if (shouldTakeLock)
                     usageLock.EnterReadLock();
-                using (var qa = new SenderActions())
+                using (var qa = new SenderActions(protocol, path, Id))
                     action(qa);
             }
             finally { if (shouldTakeLock) usageLock.ExitReadLock(); }
         }
+
+        #region IDisposable
 
         public void Dispose()
         {
@@ -65,5 +69,7 @@ namespace Rhino.ServiceBus.Files.Storage
         public void DisposeRudely()
         {
         }
+
+        #endregion
     }
 }

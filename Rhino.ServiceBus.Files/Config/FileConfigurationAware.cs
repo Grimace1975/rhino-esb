@@ -4,6 +4,7 @@ using Rhino.ServiceBus.Files;
 using Rhino.ServiceBus.Files.Queues;
 using Rhino.ServiceBus.Impl;
 using Rhino.ServiceBus.Internal;
+using Rhino.ServiceBus.Files.Protocols;
 
 namespace Rhino.ServiceBus.Config
 {
@@ -37,6 +38,7 @@ namespace Rhino.ServiceBus.Config
                 l.Resolve<IReflection>()));
 
             b.RegisterSingleton<IMessageBuilder<MessagePayload>>(() => (IMessageBuilder<MessagePayload>)new FilesMessageBuilder(
+                protocol,
                 l.Resolve<IMessageSerializer>(),
                 l.Resolve<IServiceLocator>()));
 

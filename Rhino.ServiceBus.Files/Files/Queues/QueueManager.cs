@@ -6,6 +6,7 @@ using System.Threading;
 using Common.Logging;
 using Rhino.ServiceBus.Files.Monitoring;
 using Rhino.ServiceBus.Files.Storage;
+using Rhino.ServiceBus.Files.Protocols;
 
 namespace Rhino.ServiceBus.Files.Queues
 {
@@ -48,12 +49,14 @@ namespace Rhino.ServiceBus.Files.Queues
         private volatile int currentlyInCriticalReceiveStatus;
         private volatile int currentlyInsideTransaction;
         private PerformanceMonitor monitor;
+        private readonly IQueueProtocol protocol;
         private readonly string path;
 
-        public QueueManager(string path)
+        public QueueManager(IQueueProtocol protocol, string path)
         {
+            this.protocol = protocol;
             this.path = path;
-            queueStorage = new QueueStorage(path);
+            queueStorage = new QueueStorage(protocol, path);
             queueStorage.Initialize();
             queueStorage.Global(actions =>
             {

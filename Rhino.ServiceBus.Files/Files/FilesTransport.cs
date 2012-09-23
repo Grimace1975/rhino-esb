@@ -12,6 +12,7 @@ using Rhino.ServiceBus.Internal;
 using Rhino.ServiceBus.Transport;
 using Rhino.ServiceBus.Util;
 using Transaction = System.Transactions.Transaction;
+using Rhino.ServiceBus.Files.Protocols;
 
 namespace Rhino.ServiceBus.Files
 {
@@ -211,9 +212,9 @@ namespace Rhino.ServiceBus.Files
 
         private void ConfigureAndStartQueueManager()
         {
-            path = endpoint.LocalPath;
-            queueName = Path.GetFileName(path);
-            queueManager = new QueueManager(path);
+            queueName = Path.GetFileName(endpoint.LocalPath);
+            path = (endpoint.Host != "." ? Path.GetDirectoryName(endpoint.LocalPath) : queueProtocol.DefaultPath);
+            queueManager = new QueueManager(queueProtocol, path);
             queueManager.CreateQueues(queueName);
             if (enablePerformanceCounters)
                 queueManager.EnablePerformanceCounters();

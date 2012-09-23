@@ -3,6 +3,7 @@ using System.Transactions;
 using Rhino.ServiceBus.Files.Queues;
 using Rhino.ServiceBus.Impl;
 using Rhino.ServiceBus.Internal;
+using Rhino.ServiceBus.Files.Protocols;
 
 namespace Rhino.ServiceBus.Files
 {

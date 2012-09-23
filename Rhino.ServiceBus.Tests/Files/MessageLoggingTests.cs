@@ -12,6 +12,7 @@ using Rhino.ServiceBus.Messages;
 using Xunit;
 using Rhino.ServiceBus.Files;
 using Rhino.ServiceBus.Files.Queues;
+using Rhino.ServiceBus.Files.Protocols;
 
 namespace Rhino.ServiceBus.Tests.Files
 {
@@ -25,6 +26,7 @@ namespace Rhino.ServiceBus.Tests.Files
 
         public MessageLoggingTests()
         {
+            var protocol = new NullProtocol();
             var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log_endpoint.esent");
             if (Directory.Exists(path))
                 Directory.Delete(path, true);
@@ -37,7 +39,7 @@ namespace Rhino.ServiceBus.Tests.Files
             container.Register(Component.For<MessageLoggingModule>());
 
             messageSerializer = container.Resolve<IMessageSerializer>();
-            queue = new QueueManager(path);
+            queue = new QueueManager(protocol, path);
             queue.CreateQueues("log_endpoint");
             queue.Start();
             

@@ -10,7 +10,7 @@ namespace Rhino.ServiceBus.Files
         {
             AddProtocol(new NullProtocol());
             AddProtocol(new EmlProtocol());
-            AddProtocol(new CsvProtocol());
+            //AddProtocol(new CsvProtocol());
         }
 
         private static Dictionary<string, IQueueProtocol> protocols = new Dictionary<string, IQueueProtocol>();
